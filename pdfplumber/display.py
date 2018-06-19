@@ -218,6 +218,9 @@ class PageImage(object):
     def save(self, *args, **kwargs):
         return self.annotated.save(*args, **kwargs)
 
+    def show(self, *args, **kwargs):
+        return self.annotated.show(*args, **kwargs)
+        
     def debug_table(self, table,
         fill=DEFAULT_FILL,
         stroke=DEFAULT_STROKE,

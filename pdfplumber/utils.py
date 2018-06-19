@@ -196,19 +196,21 @@ def extract_words(chars,
     keep_blank_chars=False,
     match_fontname=True,
     match_fontsize=True,
-    font_height_tolerance=DEFAULT_FONT_HEIGHT_TOLERANCE
+    font_height_tolerance=DEFAULT_FONT_HEIGHT_TOLERANCE,
+    x_shift=0,
+    y_shift=0
     ):
     
     x_tolerance = decimalize(x_tolerance)
     y_tolerance = decimalize(y_tolerance)
 
-    def process_word_chars(chars):
+    def process_word_chars(chars,width_shift=x_shift,height_shift=y_shift):
         x0, top, x1, bottom, fontname, fontsize= objects_to_bbox_with_font(chars, match_fontname, match_fontsize, font_height_tolerance)
         result =  {
-            "x0": x0,
-            "x1": x1,
-            "top": top,
-            "bottom": bottom,
+            "x0": x0+width_shift,
+            "x1": x1+width_shift,
+            "top": top+height_shift,
+            "bottom": bottom+height_shift,
             "text": "".join(map(itemgetter("text"), chars)),
         }
         if match_fontname:

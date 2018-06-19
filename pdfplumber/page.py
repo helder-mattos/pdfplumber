@@ -158,11 +158,15 @@ class Page(Container):
     def extract_words(self,
         x_tolerance=utils.DEFAULT_X_TOLERANCE,
         y_tolerance=utils.DEFAULT_Y_TOLERANCE,
-        keep_blank_chars=False):
+        keep_blank_chars=False,
+        x_shift=0,
+        y_shift=0):
 
         return utils.extract_words(self.chars,
             x_tolerance=x_tolerance,
-            y_tolerance=y_tolerance)
+            y_tolerance=y_tolerance,
+            x_shift=x_shift,
+            y_shift=y_shift)
 
     def crop(self, bbox):
         class CroppedPage(DerivedPage):

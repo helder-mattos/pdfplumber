@@ -135,20 +135,32 @@ def objects_to_bbox(objects):
         max(map(itemgetter("bottom"), objects)),
     )
 
-def get_font_from_chars(chars, match_fontname):
-    fontset = set()
+def get_font_from_chars(chars, match_fontname=True):
+    # Match fontname returns the most common single font found in word (if a tie the first one is retrieved),
+    # false returns list of fonts found 
+    fontset = {}
     for char in chars:
-        fontset.add(char['fontname'].split(',')[0])
+        font = char['fontname'].split(',')[0]
+        if font in fontset:
+            fontset[font] +=  1
+        else:
+            fontset[font] = 1
     number_of_fonts_found = len(fontset)
     if number_of_fonts_found > 1:
         if match_fontname:
-            charfonttext = list(map(itemgetter("fontname"), chars))
-            charlisttext = list(map(itemgetter("text"), chars))
-            raise WordFontError("Multiple fonts '%s' found in word %s \nPerhaps word tolerance is set too low?" % (charfonttext, charlisttext))
+            top = 0
+            topFont = None 
+            for font in fontset:
+                if fontset[font] > top:
+                    top = fontset[font]
+                    topFont = font
+                else:
+                    pass
+            return topFont
         return( ", ".join([str(font) for font in fontset]) )
     if number_of_fonts_found == 0:
         return ""
-    return fontset.pop()
+    return set(fontset).pop()
 
 def get_font_height_from_chars(chars, match_fontsize, font_height_tolerance):
     charlist = list(map(itemgetter("height"), chars))
@@ -217,7 +229,6 @@ def extract_words(chars,
             result["fontname"]=fontname
         if match_fontsize:
             result["fontsize"]=fontsize
-
         return result
 
 

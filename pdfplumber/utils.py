@@ -11,7 +11,7 @@ DEFAULT_Y_TOLERANCE = 3
 
 ## Raise an error if the individual characters' font sizes vary by more
 ## than this (if we are in strict font height mode )
-DEFAULT_FONT_HEIGHT_TOLERANCE = 0.5
+DEFAULT_FONT_HEIGHT_TOLERANCE = 10
 
 class WordFontError(RuntimeError):
     def __init__(self,*args,**kwargs):

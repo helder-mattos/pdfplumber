@@ -90,6 +90,8 @@ class Page(Container):
             "colorspace",
             "imagemask",
             "pts",
+            "ncs",
+            "graphicstate",
         ]
 
         NON_DECIMALIZE = [
